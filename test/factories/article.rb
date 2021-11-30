@@ -5,6 +5,6 @@ FactoryBot.define do
     category
     title { Faker::Lorem.sentence[0..49] }
     body { Faker::Lorem.paragraph }
-    status { "draft" }
+    status { "Draft" }
   end
 end
