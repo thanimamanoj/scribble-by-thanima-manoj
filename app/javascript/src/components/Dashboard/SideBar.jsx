@@ -1,36 +1,42 @@
 import React, { useState } from "react";
 
-import { Search, Plus } from "@bigbinary/neeto-icons";
-import { Typography } from "@bigbinary/neetoui/v2";
+import { Search, Plus, Check } from "@bigbinary/neeto-icons";
+import { Typography, Input, Button } from "@bigbinary/neetoui/v2";
 import { MenuBar } from "@bigbinary/neetoui/v2/layouts";
 
-const SideBar = ({ categories }) => {
+const SideBar = ({
+  categories,
+  selectedCategory,
+  setSelectedCategory,
+  active,
+  setActive,
+  count,
+}) => {
   const [isSearchCollapsed, setIsSearchCollapsed] = useState(true);
   const [isAddCollapsed, setIsAddCollapsed] = useState(true);
-  // const [categories,setCategories] = useState([]);
-  // const [loading,setLoading] = useState(false)
-  // const fetchCategories = async () => {
-  //   try {
-  //     setLoading(true)
-  //     const response = await categoriesApi.list();
-  //     setCategories(response.data.categories);
-  //     setLoading(false);
-  //   } catch (error) {
-  //     logger.error(error);
-  //     setLoading(false);
-  //   }
-  // };
+  const [addCategory, setAddCategory] = useState();
 
-  // useEffect(() => {
-  //   fetchCategories();
-  // }, []);
   return (
     <div className="flex">
-      {/* {JSON.stringify(categories)} */}
       <MenuBar showMenu={true} title="Articles">
-        <MenuBar.Block label="All" count={13} active />
-        <MenuBar.Block label="Draft" count={2} />
-        <MenuBar.Block label="Published" count={7} />
+        <MenuBar.Block
+          label="All"
+          count={count.all_count}
+          onClick={() => setActive("All")}
+          active={active === "All"}
+        />
+        <MenuBar.Block
+          label="Draft"
+          count={count.status_count?.Draft}
+          onClick={() => setActive("Draft")}
+          active={active === "Draft"}
+        />
+        <MenuBar.Block
+          label="Published"
+          count={count.status_count?.Published}
+          onClick={() => setActive("Published")}
+          active={active === "Published"}
+        />
 
         <MenuBar.SubTitle
           iconProps={[
@@ -61,12 +67,28 @@ const SideBar = ({ categories }) => {
           collapse={isSearchCollapsed}
           onCollapse={() => setIsSearchCollapsed(true)}
         />
-        {/* <MenuBar.AddNew
-          collapse={isAddCollapsed}
-          onCollapse={() => setIsAddCollapsed(true)}
-        /> */}
+        {!isAddCollapsed && (
+          <div className="flex">
+            <Input
+              icon={() => <Check />}
+              value={addCategory}
+              onChange={e => setAddCategory(e.target.value)}
+            />
+            <Button
+              icon={() => <Check />}
+              style="secondary"
+              //onClick={() => (console.log(addCategory)}
+            ></Button>
+          </div>
+        )}
         {categories.map(({ name, id }) => (
-          <MenuBar.Block key={id} label={name} count={80} />
+          <MenuBar.Block
+            key={id}
+            label={name}
+            count={count.category_count[id]}
+            onClick={() => setSelectedCategory(name)}
+            active={selectedCategory === name}
+          />
         ))}
       </MenuBar>
     </div>
