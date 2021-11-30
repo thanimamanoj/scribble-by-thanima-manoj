@@ -19,6 +19,7 @@ const Dashboard = () => {
   const [selectedCategory, setSelectedCategory] = useState();
   const [active, setActive] = useState("All");
   const [count, setCount] = useState([]);
+  const [addCategory, setAddCategory] = useState(0);
 
   const fetchCategories = async () => {
     try {
@@ -34,7 +35,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     fetchCategories();
-  }, []);
+  }, [addCategory]);
 
   const fetchArticles = async () => {
     try {
@@ -80,6 +81,7 @@ const Dashboard = () => {
           active={active}
           setActive={setActive}
           count={count}
+          setAddCategory={setAddCategory}
         />
         <div>
           <Main
