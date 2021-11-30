@@ -53,7 +53,7 @@ const Table = ({ tableData }) => {
         >
           {allColumns.map((column, index) => (
             <div key={index}>
-              <li key={column.Id}>
+              <li key={column.id}>
                 <Checkbox
                   label={column.Header}
                   {...column.getToggleHiddenProps()}
