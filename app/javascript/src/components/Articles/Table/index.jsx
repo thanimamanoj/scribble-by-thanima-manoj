@@ -3,16 +3,17 @@ import React, { useMemo } from "react";
 import { Plus } from "@bigbinary/neeto-icons";
 import { Typography, Button, Dropdown, Checkbox } from "@bigbinary/neetoui/v2";
 import { isNil, isEmpty, either } from "ramda";
+import { useHistory } from "react-router-dom";
 import { useTable, useGlobalFilter, useFilters } from "react-table";
 
 import { COLUMNS } from "./columns";
 import { GlobalFilter } from "./GlobalFilter";
 import "./table.css";
 
-const Table = ({ tableData }) => {
+const Table = ({ tableData, categories }) => {
   const columns = useMemo(() => COLUMNS, []);
   const data = useMemo(() => tableData, [tableData]);
-
+  const history = useHistory();
   const tableInstance = useTable(
     {
       columns,
@@ -64,10 +65,15 @@ const Table = ({ tableData }) => {
         </Dropdown>
         <Button
           label="Add New Article"
-          onClick={function noRefCheck() {}}
           style="primary"
           icon={() => <Plus size={20} />}
           className=""
+          onClick={() =>
+            history.push({
+              pathname: "/articles/create",
+              state: { categories: categories },
+            })
+          }
         />
       </div>
       <div className="flex flex-col mt-10 ">

@@ -1,8 +1,7 @@
-import { TOASTR_OPTIONS } from "constants";
-
 import React from "react";
 
 import { toast } from "react-toastify";
+import { TOASTR_OPTIONS } from "src/constants";
 
 const ToastrComponent = ({ message }) => {
   return (

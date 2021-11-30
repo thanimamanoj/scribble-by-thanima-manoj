@@ -88,6 +88,7 @@ const Dashboard = () => {
             tdata={articles}
             active={active}
             selectedCategory={selectedCategory}
+            categories={categories}
           />
         </div>
       </div>
