@@ -29,7 +29,7 @@ class ArticleTest < ActiveSupport::TestCase
   end
 
   def test_article_should_have_a_valid_status
-    @article.status = "draft"
+    @article.status = "Draft"
     assert @article.valid?
   end
 end
