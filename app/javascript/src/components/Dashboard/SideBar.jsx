@@ -11,10 +11,11 @@ const SideBar = ({
   active,
   setActive,
   count,
+  handleAddCategory,
 }) => {
   const [isSearchCollapsed, setIsSearchCollapsed] = useState(true);
   const [isAddCollapsed, setIsAddCollapsed] = useState(true);
-  const [addCategory, setAddCategory] = useState();
+  const [name, setName] = useState();
 
   return (
     <div className="flex">
@@ -69,15 +70,14 @@ const SideBar = ({
         />
         {!isAddCollapsed && (
           <div className="flex">
-            <Input
-              icon={() => <Check />}
-              value={addCategory}
-              onChange={e => setAddCategory(e.target.value)}
-            />
+            <Input value={name} onChange={e => setName(e.target.value)} />
             <Button
               icon={() => <Check />}
               style="secondary"
-              //onClick={() => (console.log(addCategory)}
+              onClick={() => {
+                handleAddCategory(name);
+                setIsAddCollapsed(!isAddCollapsed);
+              }}
             ></Button>
           </div>
         )}
