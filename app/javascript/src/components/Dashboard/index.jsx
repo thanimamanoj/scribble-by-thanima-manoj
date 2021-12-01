@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 
 import { PageLoader } from "@bigbinary/neetoui/v2";
-import { isNil, isEmpty, either } from "ramda";
 
 import articlesApi from "apis/articles";
 import categoriesApi from "apis/categories";
@@ -19,7 +18,6 @@ const Dashboard = () => {
   const [selectedCategory, setSelectedCategory] = useState();
   const [active, setActive] = useState("All");
   const [count, setCount] = useState([]);
-  const [addCategory, setAddCategory] = useState(0);
 
   const fetchCategories = async () => {
     try {
@@ -35,7 +33,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     fetchCategories();
-  }, [addCategory]);
+  }, []);
 
   const fetchArticles = async () => {
     try {
@@ -54,18 +52,31 @@ const Dashboard = () => {
     fetchArticles();
   }, []);
 
+  const deleteArticle = async id => {
+    var answer = window.confirm("Are you sure you want to delete the article?");
+    if (answer) {
+      try {
+        await articlesApi.destroy(id);
+        await fetchArticles();
+      } catch (error) {
+        logger.error(error);
+      }
+    }
+  };
+
+  const handleAddCategory = async name => {
+    try {
+      await categoriesApi.create({ category: { name } });
+      await fetchCategories();
+    } catch (error) {
+      logger.error(error);
+    }
+  };
+
   if (loading || categoryLoading) {
     return (
       <div className="w-screen h-screen">
         <PageLoader />
-      </div>
-    );
-  }
-
-  if (either(isNil, isEmpty)(articles)) {
-    return (
-      <div className="flex justify-center items-center">
-        <h1 className="text-xl leading-5 text-center">No articles found!😔</h1>
       </div>
     );
   }
@@ -81,7 +92,7 @@ const Dashboard = () => {
           active={active}
           setActive={setActive}
           count={count}
-          setAddCategory={setAddCategory}
+          handleAddCategory={handleAddCategory}
         />
         <div>
           <Main
@@ -89,6 +100,7 @@ const Dashboard = () => {
             active={active}
             selectedCategory={selectedCategory}
             categories={categories}
+            deleteArticle={deleteArticle}
           />
         </div>
       </div>

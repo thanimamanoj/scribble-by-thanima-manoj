@@ -2,7 +2,13 @@ import React, { useState, useEffect } from "react";
 
 import Table from "../Articles/Table";
 
-const Main = ({ tdata, active, selectedCategory, categories }) => {
+const Main = ({
+  tdata,
+  active,
+  selectedCategory,
+  categories,
+  deleteArticle,
+}) => {
   const [tableData, setTableData] = useState([]);
 
   useEffect(() => {
@@ -23,7 +29,11 @@ const Main = ({ tdata, active, selectedCategory, categories }) => {
 
   return (
     <div>
-      <Table tableData={tableData} categories={categories} />
+      <Table
+        tableData={tableData}
+        categories={categories}
+        deleteArticle={deleteArticle}
+      />
     </div>
   );
 };

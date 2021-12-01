@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class ArticlesController < ApplicationController
-  before_action :load_article, only: [:update, :show]
+  before_action :load_article, only: %i[show update destroy]
 
   def index
     @articles = Article.all
@@ -10,7 +10,7 @@ class ArticlesController < ApplicationController
   def create
     article = Article.new(article_params)
     if article.save
-      render status: :ok, json: { notice: t("successfully_created") }
+      render status: :ok, json: { notice: t("successfully_created", entity: "Article") }
     else
       errors = article.errors.full_messages.to_sentence
       render status: :unprocessable_entity, json: { error: errors }
@@ -23,7 +23,16 @@ class ArticlesController < ApplicationController
 
   def update
     if @article.update(article_params)
-      render status: :ok, json: { notice: "Successfully updated article." }
+      render status: :ok, json: { notice: t("successfully_updated", entity: "Article") }
+    else
+      render status: :unprocessable_entity,
+        json: { error: @article.errors.full_messages.to_sentence }
+    end
+  end
+
+  def destroy
+    if @article.destroy
+      render status: :ok, json: { notice: t("successfully_deleted", entity: "Article") }
     else
       render status: :unprocessable_entity,
         json: { error: @article.errors.full_messages.to_sentence }
@@ -35,7 +44,7 @@ class ArticlesController < ApplicationController
     def load_article
       @article = Article.find_by(id: params[:id])
       unless @article
-        render status: :not_found, json: { error: t("article.not_found") }
+        render status: :not_found, json: { error: t("not_found", entity: "Article") }
       end
     end
 

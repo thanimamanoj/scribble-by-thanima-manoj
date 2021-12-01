@@ -4,8 +4,6 @@ import { Search, Plus, Check } from "@bigbinary/neeto-icons";
 import { Typography, Input, Button } from "@bigbinary/neetoui/v2";
 import { MenuBar } from "@bigbinary/neetoui/v2/layouts";
 
-import categoriesApi from "apis/categories";
-
 const SideBar = ({
   categories,
   selectedCategory,
@@ -13,22 +11,12 @@ const SideBar = ({
   active,
   setActive,
   count,
-  setAddCategory,
+  handleAddCategory,
 }) => {
   const [isSearchCollapsed, setIsSearchCollapsed] = useState(true);
   const [isAddCollapsed, setIsAddCollapsed] = useState(true);
   const [name, setName] = useState();
 
-  const handleAddCategory = async event => {
-    event.preventDefault();
-    try {
-      await categoriesApi.create({ category: { name } });
-      setIsAddCollapsed(!isAddCollapsed);
-      setAddCategory(prev => prev + 1);
-    } catch (error) {
-      logger.error(error);
-    }
-  };
   return (
     <div className="flex">
       <MenuBar showMenu={true} title="Articles">
@@ -82,15 +70,14 @@ const SideBar = ({
         />
         {!isAddCollapsed && (
           <div className="flex">
-            <Input
-              icon={() => <Check />}
-              value={name}
-              onChange={e => setName(e.target.value)}
-            />
+            <Input value={name} onChange={e => setName(e.target.value)} />
             <Button
               icon={() => <Check />}
               style="secondary"
-              onClick={handleAddCategory}
+              onClick={() => {
+                handleAddCategory(name);
+                setIsAddCollapsed(!isAddCollapsed);
+              }}
             ></Button>
           </div>
         )}

@@ -15,8 +15,8 @@ const CreateArticle = ({ history }) => {
   const [selectedCategory, setSelectedCategory] = useState();
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async () => {
-    //event.preventDefault();
+  const handleSubmit = async event => {
+    event.preventDefault();
     setLoading(true);
     const category_id = selectedCategory?.id;
     try {
