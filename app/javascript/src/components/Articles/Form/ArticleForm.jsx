@@ -21,7 +21,7 @@ const ArticleForm = ({
   handleSubmit,
 }) => {
   return (
-    <form className="max-w-lg mx-auto">
+    <form className="max-w-lg mx-auto" onSubmit={handleSubmit}>
       <div className="flex justify-between items-center my-4">
         <Input
           label="Article Title"
@@ -51,42 +51,34 @@ const ArticleForm = ({
         value={body}
         onChange={e => setBody(e.target.value)}
       />
-      <div className="flex">
+      <div className="flex mt-4 ">
         <Button
+          className="neeto-ui-bg-secondary-indigo"
           label={status === "Draft" ? "Save Draft" : "Publish"}
-          onClick={function noRefCheck() {}}
+          type="submit"
           style="primary"
         />
-        <Dropdown
-          buttonProps={{
-            onClick: function noRefCheck() {},
-          }}
-          name="category"
-          value={status}
-          buttonStyle="primary"
-          onClose={function noRefCheck() {}}
-          position="bottom-end"
-          onChange={handleSubmit}
-        >
-          <li
-            value="Draft"
-            onClick={() => {
-              setStatus("Draft");
-            }}
-          >
-            Save Draft
-          </li>
-          <li
-            value="publish"
-            onClick={() => {
-              setStatus("Published");
-            }}
-          >
-            Publish
-          </li>
-        </Dropdown>
+        <div className="neeto-ui-bg-secondary-indigo">
+          <Dropdown value={status} buttonStyle="primary" position="bottom-end">
+            <li
+              value="Draft"
+              onClick={() => {
+                setStatus("Draft");
+              }}
+            >
+              Save Draft
+            </li>
+            <li
+              value="publish"
+              onClick={() => {
+                setStatus("Published");
+              }}
+            >
+              Publish
+            </li>
+          </Dropdown>
+        </div>
       </div>
-      {JSON.stringify(title)}
     </form>
   );
 };

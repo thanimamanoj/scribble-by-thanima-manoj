@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
 
-import { Plus } from "@bigbinary/neeto-icons";
+import { Plus, Edit, Delete } from "@bigbinary/neeto-icons";
 import { Typography, Button, Dropdown, Checkbox } from "@bigbinary/neetoui/v2";
 import { isNil, isEmpty, either } from "ramda";
 import { useHistory } from "react-router-dom";
@@ -34,6 +34,11 @@ const Table = ({ tableData, categories }) => {
   } = tableInstance;
   const { globalFilter } = state;
 
+  const handleDelete = id => {
+    var answer = window.confirm("Are you sure you want to delete article?");
+    answer && true;
+    id;
+  };
   if (either(isNil, isEmpty)(tableData)) {
     return (
       <div className="mt-24 ml-32">
@@ -64,10 +69,10 @@ const Table = ({ tableData, categories }) => {
           ))}
         </Dropdown>
         <Button
+          className="neeto-ui-bg-secondary-indigo"
           label="Add New Article"
           style="primary"
           icon={() => <Plus size={20} />}
-          className=""
           onClick={() =>
             history.push({
               pathname: "/articles/create",
@@ -106,6 +111,35 @@ const Table = ({ tableData, categories }) => {
                             </td>
                           );
                         })}
+                        <td>
+                          <div className="flex">
+                            <div className=" mr-4">
+                              <Button
+                                label="Edit"
+                                onClick={() => {
+                                  history.push({
+                                    pathname: `/articles/${row.original.id}/edit`,
+                                    state: { categories: categories },
+                                  });
+                                }}
+                                style="secondary"
+                                icon={() => <Edit />}
+                                iconPosition="left"
+                              />
+                            </div>
+                            <div className=" mr-8">
+                              <Button
+                                label="Delete"
+                                onClick={() => {
+                                  handleDelete(row.original.id);
+                                }}
+                                style="danger"
+                                icon={() => <Delete />}
+                                iconPosition="left"
+                              />
+                            </div>
+                          </div>
+                        </td>
                       </tr>
                     );
                   })}

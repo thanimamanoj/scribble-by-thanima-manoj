@@ -6,6 +6,7 @@ import { ToastContainer } from "react-toastify";
 import { registerIntercepts, setAuthHeaders } from "apis/axios";
 import { initializeLogger } from "common/logger";
 import CreateArticle from "components/Articles/CreateArticle";
+import EditArticle from "components/Articles/EditArticle";
 import Dashboard from "components/Dashboard/index";
 
 const App = () => {
@@ -29,6 +30,7 @@ const App = () => {
         <Route exact path="/about" render={() => <div>About</div>} /> */}
         <Route exact path="/" component={Dashboard} />
         <Route exact path="/articles/create" component={CreateArticle} />
+        <Route exact path="/articles/:id/edit" component={EditArticle} />
       </Switch>
     </Router>
   );
