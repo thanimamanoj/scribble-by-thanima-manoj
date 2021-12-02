@@ -7,7 +7,7 @@ const Data = [
     icon: <Settings size={28} />,
     label: "General",
     description: "Page Title, Brand Name & Meta Description ",
-    link: "/settings/general",
+    link: "/settings",
   },
   {
     icon: <Repeat size={28} />,

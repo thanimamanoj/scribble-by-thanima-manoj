@@ -6,7 +6,7 @@ import Data from "./Data";
 
 const SideBar = () => {
   return (
-    <div className="h-screen w-1/4 border ">
+    <div className="h-screen w-1/3 border ">
       <ul className=" pt-6">
         {Data.map((value, index) => (
           <li
