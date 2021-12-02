@@ -8,6 +8,8 @@ import { initializeLogger } from "common/logger";
 import CreateArticle from "components/Articles/CreateArticle";
 import EditArticle from "components/Articles/EditArticle";
 import Dashboard from "components/Dashboard/index";
+import Settings from "components/Settings";
+import General from "components/Settings/General";
 
 const App = () => {
   const [loading, setLoading] = useState(true);
@@ -31,6 +33,8 @@ const App = () => {
         <Route exact path="/" component={Dashboard} />
         <Route exact path="/articles/create" component={CreateArticle} />
         <Route exact path="/articles/:id/edit" component={EditArticle} />
+        <Route exact path="/settings" component={Settings} />
+        <Route exact path="/settings/general" component={General} />
       </Switch>
     </Router>
   );

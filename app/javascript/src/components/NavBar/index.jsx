@@ -24,6 +24,7 @@ const NavBar = () => {
               onClick={function noRefCheck() {}}
               style="link"
               size="large"
+              to="/settings"
             />
           </div>
           <div className="flex items-center justify-end">
