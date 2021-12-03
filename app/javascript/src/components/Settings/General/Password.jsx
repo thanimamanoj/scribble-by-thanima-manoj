@@ -44,6 +44,7 @@ const Password = ({ create_password, setCreatePassword, setPassword }) => {
       {create_password && (
         <div>
           <Input
+            type="password"
             label="Password"
             onChange={e => setPassword(e.target.value)}
             onKeyUp={password_validate}
