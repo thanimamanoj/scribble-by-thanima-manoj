@@ -7,6 +7,7 @@ import {
   Label,
   Textarea,
 } from "@bigbinary/neetoui/v2";
+import { useHistory } from "react-router-dom";
 
 const ArticleForm = ({
   title,
@@ -20,6 +21,7 @@ const ArticleForm = ({
   categories,
   handleSubmit,
 }) => {
+  const history = useHistory();
   return (
     <form className="max-w-lg mx-auto" onSubmit={handleSubmit}>
       <div className="flex justify-between items-center my-4">
@@ -78,6 +80,12 @@ const ArticleForm = ({
             </li>
           </Dropdown>
         </div>
+        <Button
+          label="Cancel"
+          onClick={() => history.push("/")}
+          style="primary"
+          className="ml-4"
+        />
       </div>
     </form>
   );

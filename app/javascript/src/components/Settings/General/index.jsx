@@ -1,17 +1,48 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
-import { Typography, Input, Button } from "@bigbinary/neetoui/v2";
+import { Typography, Input, Button, PageLoader } from "@bigbinary/neetoui/v2";
+
+import generalsApi from "apis/generals";
 
 import Password from "./Password";
 
-const General = () => {
+const General = ({ history }) => {
   const [site_name, setSiteName] = useState("Spinkart");
   const [password, setPassword] = useState("");
   const [create_password, setCreatePassword] = useState(false);
-
-  const handleSave = () => {
-    password;
+  const [loading, setLoading] = useState(false);
+  const handleSave = async event => {
+    event.preventDefault();
+    try {
+      await generalsApi.update({
+        payload: { general: { name: site_name, password } },
+      });
+      history.push("/settings");
+    } catch (error) {
+      logger.error(error);
+    }
   };
+
+  const fetchGeneralDetails = async () => {
+    try {
+      setLoading(true);
+      const response = await generalsApi.show();
+      setSiteName(response.data.general.name);
+    } catch (error) {
+      logger.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchGeneralDetails();
+  }, []);
+
+  if (loading) {
+    <PageLoader />;
+  }
+
   return (
     <div className=" mx-auto mt-4">
       <Typography style="h2">General Settings</Typography>
