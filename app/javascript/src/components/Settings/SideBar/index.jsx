@@ -19,12 +19,10 @@ const SideBar = () => {
             <div className="mx-4 flex items-center">
               <div className="grid items-center mr-2">{value.icon}</div>
               <div className="grid items-center ">
-                {/* <Button label={value.label} size="large" style="text" /> */}
                 <Typography style="h4">{value.label}</Typography>
                 <Typography className="text-gray-600" style="body2">
                   {value.description}
                 </Typography>
-                {/* <Label className="">{value.description}</Label> */}
               </div>
             </div>
           </li>
