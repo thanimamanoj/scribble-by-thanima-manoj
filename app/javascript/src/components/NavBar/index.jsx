@@ -16,14 +16,16 @@ const NavBar = () => {
               label="Articles"
               onClick={function noRefCheck() {}}
               style="link"
-              className="mr-4"
+              className="mr-4 hover:neeto-ui-text-gray-800"
               size="large"
+              to="/"
             />
             <Button
               label="Settings"
               onClick={function noRefCheck() {}}
               style="link"
               size="large"
+              to="/settings"
             />
           </div>
           <div className="flex items-center justify-end">
