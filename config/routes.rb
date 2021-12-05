@@ -2,7 +2,7 @@
 
 Rails.application.routes.draw do
   defaults format: :json do
-    resources :categories, only: %i[index create]
+    resources :categories, except: %i[new edit], param: :id
     resources :articles, except: %i[new edit], param: :id
     resources :generals, only: %i[show update], param: :id
   end
