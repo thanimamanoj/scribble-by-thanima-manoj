@@ -1,21 +1,37 @@
 import React, { useState } from "react";
 
-import { Plus, Edit, Delete, Check } from "@bigbinary/neeto-icons";
+import { Plus, Check } from "@bigbinary/neeto-icons";
 import { Typography, Input, Button } from "@bigbinary/neetoui/v2";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+
+import Item from "./Item";
 
 const CategoryList = ({
   categories,
   handleAdd,
-  handleDelete,
-  handleEdit,
   addCategory,
   setAddCategory,
-  editCategory,
-  setEditCategory,
+  fetchCategories,
 }) => {
+  const [final_categories, setFinalCategories] = useState(categories);
   const [name, setName] = useState("");
-  const [editCategoryName, setEditCategoryName] = useState("");
+
+  const handleOnDragEnd = result => {
+    const { source, destination } = result;
+    if (!destination) return;
+
+    if (
+      destination.droppableId === source.droppableId &&
+      destination.index === source.index
+    ) {
+      return;
+    }
+
+    const items = Array.from(final_categories);
+    const [reordered_items] = items.splice(source.index, 1);
+    items.splice(destination.index, 0, reordered_items);
+    setFinalCategories(items);
+  };
   return (
     <div>
       <Typography style="h2">Manage Categories</Typography>
@@ -39,55 +55,22 @@ const CategoryList = ({
             <Check onClick={() => handleAdd(name)} />
           </div>
         )}
-        <DragDropContext>
+        <DragDropContext onDragEnd={handleOnDragEnd}>
           <Droppable droppableId="categories">
             {provided => (
               <ul {...provided.droppableProps} ref={provided.innerRef}>
-                {categories.map(({ id, name }, index) => (
-                  <Draggable key={id} draggableId={id} index={index}>
+                {categories.map((category, index) => (
+                  <Draggable
+                    key={category.id}
+                    draggableId={String(category.id)}
+                    index={index}
+                  >
                     {provided => (
-                      <li
-                        {...provided.dragHandleProps}
-                        {...provided.dragHandleProps}
-                        ref={provided.innerRef}
-                      >
-                        {editCategory === id ? (
-                          <div className="flex">
-                            <Input
-                              value={editCategoryName}
-                              onChange={e =>
-                                setEditCategoryName(e.target.value)
-                              }
-                            />
-                            <Check
-                              onClick={() => handleEdit(id, editCategoryName)}
-                            />
-                          </div>
-                        ) : (
-                          <div className="flex">
-                            <i className="ri-drag-move-2-fill flex items-center h-12 mr-2" />
-                            <Typography
-                              style="h5"
-                              className="flex items-center h-12"
-                            >
-                              {name}
-                            </Typography>
-                            <Delete
-                              size={18}
-                              onClick={() => handleDelete(id)}
-                              className="flex items-center h-12 ml-auto cursor-pointer mr-2"
-                            />
-                            <Edit
-                              size={18}
-                              onClick={() => {
-                                setEditCategoryName(name);
-                                setEditCategory(id);
-                              }}
-                              className="flex items-center h-12 cursor-pointer"
-                            />
-                          </div>
-                        )}
-                      </li>
+                      <Item
+                        category={category}
+                        provided={provided}
+                        fetchCategories={fetchCategories}
+                      />
                     )}
                   </Draggable>
                 ))}

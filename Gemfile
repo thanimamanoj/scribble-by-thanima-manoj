@@ -72,3 +72,5 @@ group :development, :test do
 end
 
 gem "bcrypt", "~> 3.1.13"
+
+gem "acts_in_sequence", git: "https://github.com/bigbinary/acts_in_sequence"

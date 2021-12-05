@@ -10,7 +10,6 @@ const ManageCategories = () => {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(false);
   const [addCategory, setAddCategory] = useState(false);
-  const [editCategory, setEditCategory] = useState(0);
 
   const fetchCategories = async () => {
     try {
@@ -27,28 +26,6 @@ const ManageCategories = () => {
   useEffect(() => {
     fetchCategories();
   }, []);
-
-  const handleDelete = async id => {
-    try {
-      await categoriesApi.destroy(id);
-      await fetchCategories();
-    } catch (error) {
-      logger.error(error);
-    }
-  };
-
-  const handleEdit = async (id, name) => {
-    setEditCategory(true);
-    try {
-      await categoriesApi.update({
-        id,
-        payload: { category: { name } },
-      });
-      await fetchCategories();
-    } catch (error) {
-      logger.error(error);
-    }
-  };
 
   const handleAdd = async name => {
     setAddCategory(false);
@@ -70,12 +47,9 @@ const ManageCategories = () => {
       <CategoryList
         categories={categories}
         handleAdd={handleAdd}
-        handleDelete={handleDelete}
-        handleEdit={handleEdit}
         addCategory={addCategory}
         setAddCategory={setAddCategory}
-        editCategory={editCategory}
-        setEditCategory={setEditCategory}
+        fetchCategories={fetchCategories}
       />
     </div>
   );
