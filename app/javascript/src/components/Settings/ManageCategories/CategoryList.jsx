@@ -4,6 +4,8 @@ import { Plus, Check } from "@bigbinary/neeto-icons";
 import { Typography, Input, Button } from "@bigbinary/neetoui/v2";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
+import categoriesApi from "apis/categories";
+
 import Item from "./Item";
 
 const CategoryList = ({
@@ -13,24 +15,28 @@ const CategoryList = ({
   setAddCategory,
   fetchCategories,
 }) => {
-  const [final_categories, setFinalCategories] = useState(categories);
   const [name, setName] = useState("");
 
   const handleOnDragEnd = result => {
     const { source, destination } = result;
     if (!destination) return;
 
-    if (
-      destination.droppableId === source.droppableId &&
-      destination.index === source.index
-    ) {
-      return;
-    }
-
-    const items = Array.from(final_categories);
+    const items = Array.from(categories);
     const [reordered_items] = items.splice(source.index, 1);
     items.splice(destination.index, 0, reordered_items);
-    setFinalCategories(items);
+    reorderCategories(items.map(({ id }) => id));
+  };
+
+  const reorderCategories = async items => {
+    const payload = {
+      category: items,
+    };
+    try {
+      await categoriesApi.sort(payload);
+      await fetchCategories();
+    } catch (error) {
+      logger.log(error);
+    }
   };
   return (
     <div>
