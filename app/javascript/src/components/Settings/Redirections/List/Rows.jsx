@@ -7,14 +7,15 @@ const Rows = ({
   tableData,
   fetchRedirectionDetails,
   handleEdit,
+  destroyRedirection,
   setFromPath,
   from_path,
   setToPath,
   to_path,
 }) => {
-  const [edit, setEdit] = useState(0);
+  const [editId, setEditId] = useState(0);
   const editClicked = id => {
-    setEdit(id);
+    setEditId(id);
     fetchRedirectionDetails(id);
   };
 
@@ -33,7 +34,7 @@ const Rows = ({
         <tbody>
           {tableData.map((item, index) => (
             <tr key={index} className="p-2 neeto-ui-bg-white  my-1">
-              {edit !== item.id ? (
+              {editId !== item.id ? (
                 <>
                   <td>
                     <div className="flex">
@@ -51,7 +52,10 @@ const Rows = ({
                           onClick={() => editClicked(item.id)}
                           className="mr-4 cursor-pointer"
                         />
-                        <Delete className="cursor-pointer" />
+                        <Delete
+                          onClick={() => destroyRedirection(item.id)}
+                          className="cursor-pointer"
+                        />
                       </div>
                     }
                   </td>
@@ -75,7 +79,7 @@ const Rows = ({
                   <td>
                     <Check
                       onClick={() => {
-                        setEdit(false);
+                        setEditId(0);
                         handleEdit(item.id);
                       }}
                     />

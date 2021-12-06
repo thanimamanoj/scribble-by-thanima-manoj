@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class RedirectionsController < ApplicationController
-  before_action :load_redirection, only: %i[show update]
+  before_action :load_redirection, only: %i[show update destroy]
 
   def index
     redirections = Redirection.all
@@ -27,6 +27,15 @@ class RedirectionsController < ApplicationController
       render status: :ok, json: { notice: t("successfully_updated", entity: "Redirection") }
     else
       render status: :unprocessable_entity, json: { error: @redirection.errors.full_messages.to_sentence }
+    end
+  end
+
+  def destroy
+    if @redirection.destroy
+      render status: :ok, json: { notice: t("successfully_deleted", entity: "Redirection") }
+    else
+      render status: :unprocessable_entity,
+        json: { error: @redirection.errors.full_messages.to_sentence }
     end
   end
 

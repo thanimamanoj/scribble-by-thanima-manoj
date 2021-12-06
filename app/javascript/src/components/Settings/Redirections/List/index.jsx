@@ -31,6 +31,14 @@ const List = ({ tableData, fetchRedirections }) => {
     }
   };
 
+  const destroyRedirection = async id => {
+    try {
+      await redirectionsApi.destroy(id);
+      await fetchRedirections();
+    } catch (error) {
+      logger.error(error);
+    }
+  };
   return (
     <div>
       <Header />
@@ -38,6 +46,7 @@ const List = ({ tableData, fetchRedirections }) => {
         tableData={tableData}
         fetchRedirectionDetails={fetchRedirectionDetails}
         handleEdit={handleEdit}
+        destroyRedirection={destroyRedirection}
         setFromPath={setFromPath}
         from_path={from_path}
         setToPath={setToPath}
