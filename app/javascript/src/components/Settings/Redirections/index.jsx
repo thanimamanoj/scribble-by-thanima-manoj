@@ -1,18 +1,40 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
-import { Typography } from "@bigbinary/neetoui/v2";
+import { PageLoader } from "@bigbinary/neetoui/v2";
+
+import redirectionsApi from "apis/redirections";
+
+import Add from "./Add";
+import List from "./List";
 
 const Redirections = () => {
+  const [redirections, setRedirections] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  const fetchRedirections = async () => {
+    try {
+      setLoading(true);
+      const response = await redirectionsApi.list();
+      setRedirections(response.data.redirections);
+      setLoading(false);
+    } catch (error) {
+      logger.error(error);
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchRedirections();
+  }, []);
+
+  if (loading) {
+    return <PageLoader />;
+  }
+
   return (
     <div className=" mx-auto mt-6">
-      <Typography style="h2">Redirections</Typography>
-      <Typography style="body1" className="text-gray-600 ">
-        Create and configure redirection rules to send users from old links to
-        new links. All
-      </Typography>
-      <Typography style="body1" className="text-gray-600 ">
-        are performed with 301 status codes to be SEO friendly.
-      </Typography>
+      <List tableData={redirections} />
+      <Add fetchRedirections={fetchRedirections} />
     </div>
   );
 };
