@@ -1,51 +1,48 @@
-import React from "react";
+import React, { useState } from "react";
 
-import { Edit, Delete } from "@bigbinary/neeto-icons";
-import { Typography } from "@bigbinary/neetoui/v2";
+import redirectionsApi from "apis/redirections";
 
 import Header from "./Header";
+import Rows from "./Rows";
 import "./table.css";
 
-const List = ({ tableData }) => {
+const List = ({ tableData, fetchRedirections }) => {
+  const [to_path, setToPath] = useState("");
+  const [from_path, setFromPath] = useState("");
+
+  const fetchRedirectionDetails = async id => {
+    try {
+      const response = await redirectionsApi.show(id);
+      setFromPath(response.data.redirection.from_path);
+      setToPath(response.data.redirection.to_path);
+    } catch (error) {
+      logger.error(error);
+    }
+  };
+  const handleEdit = async id => {
+    try {
+      await redirectionsApi.update({
+        id,
+        payload: { redirection: { from_path, to_path } },
+      });
+      fetchRedirections();
+    } catch (error) {
+      logger.error(error);
+    }
+  };
+
   return (
     <div>
       <Header />
-      <div className="neeto-ui-bg-pastel-blue flex mt-6 justify-center">
-        <table className="redirection">
-          <thead>
-            <tr className="text-gray-600 p-2">
-              <th>
-                <Typography style="body2">FROM PATH</Typography>
-              </th>
-              <th>TO PATH</th>
-              <th>ACTIONS</th>
-            </tr>
-          </thead>
-          <tbody>
-            {tableData.map((item, index) => (
-              <tr key={index} className="p-2 neeto-ui-bg-white  my-1">
-                <td>
-                  <div className="flex">
-                    <div className="neeto-ui-text-gray-500">
-                      {`https://scribble.com`}
-                    </div>
-                    {item.from_path.slice(20)}
-                  </div>
-                </td>
-                <td>{item.to_path}</td>
-                <td>
-                  {
-                    <div className="flex">
-                      <Edit className="mr-4 cursor-pointer" />
-                      <Delete className="cursor-pointer" />
-                    </div>
-                  }
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+      <Rows
+        tableData={tableData}
+        fetchRedirectionDetails={fetchRedirectionDetails}
+        handleEdit={handleEdit}
+        setFromPath={setFromPath}
+        from_path={from_path}
+        setToPath={setToPath}
+        to_path={to_path}
+      />
     </div>
   );
 };
