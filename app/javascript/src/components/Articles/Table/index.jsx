@@ -46,7 +46,7 @@ const Table = ({ tableData, categories, deleteArticle }) => {
         <div className="my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
             <div className="overflow-hidden border-b border-gray-200 shadow md:custom-box-shadow">
-              <table {...getTableProps()}>
+              <table className="articles" {...getTableProps()}>
                 <thead>
                   {headerGroups.map((headerGroup, index) => (
                     <tr key={index} {...headerGroup.getHeaderGroupProps()}>
