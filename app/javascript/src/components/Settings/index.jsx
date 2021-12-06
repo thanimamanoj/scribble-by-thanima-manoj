@@ -4,6 +4,7 @@ import { Route, Switch, BrowserRouter as Router } from "react-router-dom";
 
 import General from "./General";
 import ManageCategories from "./ManageCategories";
+import Redirections from "./Redirections";
 import SideBar from "./SideBar";
 
 import NavBar from "../NavBar";
@@ -21,6 +22,11 @@ const Settings = () => {
               exact
               path="/settings/manage-categories"
               component={ManageCategories}
+            />
+            <Route
+              exact
+              path="/settings/redirections"
+              component={Redirections}
             />
           </Switch>
         </Router>
