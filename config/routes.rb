@@ -6,7 +6,7 @@ Rails.application.routes.draw do
       post "sort", on: :collection
     end
     resources :articles, except: %i[new edit], param: :id
-    resources :generals, only: %i[show update], param: :id
+    resources :generals, only: %i[show update]
     resources :redirections, except: %i[new edit], param: :id
   end
 
