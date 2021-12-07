@@ -32,11 +32,16 @@ const List = ({ tableData, fetchRedirections }) => {
   };
 
   const destroyRedirection = async id => {
-    try {
-      await redirectionsApi.destroy(id);
-      await fetchRedirections();
-    } catch (error) {
-      logger.error(error);
+    var answer = window.confirm(
+      "Are you sure you want to delete the redirection?"
+    );
+    if (answer) {
+      try {
+        await redirectionsApi.destroy(id);
+        await fetchRedirections();
+      } catch (error) {
+        logger.error(error);
+      }
     }
   };
   return (
