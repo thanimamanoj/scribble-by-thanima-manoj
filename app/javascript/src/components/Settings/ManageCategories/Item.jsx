@@ -9,11 +9,16 @@ const Item = ({ category, provided, fetchCategories }) => {
   const [editCategory, setEditCategory] = useState(0);
   const [editCategoryName, setEditCategoryName] = useState("");
   const handleDelete = async id => {
-    try {
-      await categoriesApi.destroy(id);
-      await fetchCategories();
-    } catch (error) {
-      logger.error(error);
+    var answer = window.confirm(
+      "Are you sure you want to delete the category?"
+    );
+    if (answer) {
+      try {
+        await categoriesApi.destroy(id);
+        await fetchCategories();
+      } catch (error) {
+        logger.error(error);
+      }
     }
   };
 
