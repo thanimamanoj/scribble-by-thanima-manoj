@@ -4,8 +4,7 @@ class CategoriesController < ApplicationController
   before_action :load_category, only: %i[show update destroy]
 
   def index
-    categories = Category.all
-    render status: :ok, json: { categories: categories }
+    @categories = Category.all
   end
 
   def create

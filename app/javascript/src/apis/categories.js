@@ -6,7 +6,7 @@ const create = payload => axios.post("/categories/", payload);
 const update = ({ id, payload }) => axios.put(`/categories/${id}`, payload);
 const destroy = id => axios.delete(`/categories/${id}`);
 const sort = payload => axios.post("/categories/sort", payload);
-
+const fetchCategory = () => axios.get(`/public/categories`);
 const categoriesApi = {
   list,
   show,
@@ -14,6 +14,7 @@ const categoriesApi = {
   update,
   destroy,
   sort,
+  fetchCategory,
 };
 
 export default categoriesApi;

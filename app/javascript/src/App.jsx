@@ -8,6 +8,7 @@ import { initializeLogger } from "common/logger";
 import CreateArticle from "components/Articles/CreateArticle";
 import EditArticle from "components/Articles/EditArticle";
 import Dashboard from "components/Dashboard/index";
+import Preview from "components/Preview";
 import Settings from "components/Settings";
 
 const App = () => {
@@ -33,6 +34,7 @@ const App = () => {
         <Route exact path="/articles/create" component={CreateArticle} />
         <Route exact path="/articles/:id/edit" component={EditArticle} />
         <Route path="/settings" component={Settings} />
+        <Route path="/preview" component={Preview} />
       </Switch>
     </Router>
   );
