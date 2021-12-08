@@ -7,6 +7,7 @@ import generalsApi from "apis/generals";
 const Header = () => {
   const [siteName, setSiteName] = useState("");
   const [loading, setLoading] = useState(false);
+
   const fetchSiteName = async () => {
     try {
       setLoading(true);
@@ -18,6 +19,7 @@ const Header = () => {
       setLoading(false);
     }
   };
+
   useEffect(() => fetchSiteName(), []);
 
   if (loading) {
