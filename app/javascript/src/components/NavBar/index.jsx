@@ -34,7 +34,7 @@ const NavBar = () => {
               label="Preview"
               icon={() => <ExternalLink size={18} />}
               size="large"
-              to="/preview"
+              to="/public"
             />
           </div>
         </div>
