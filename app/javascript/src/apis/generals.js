@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const show = () => axios.get(`/generals/1`);
-const update = ({ payload }) => axios.put(`/generals/1`, payload);
+const show = () => axios.get(`/general`);
+const update = ({ payload }) => axios.put(`/general`, payload);
 
 const generalsApi = {
   show,
