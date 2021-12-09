@@ -12,7 +12,7 @@ const Header = () => {
     try {
       setLoading(true);
       const response = await generalsApi.show();
-      setSiteName(response.data.general.name);
+      setSiteName(response.data.general?.name);
       setLoading(false);
     } catch (error) {
       logger.error(error);
