@@ -16,9 +16,7 @@ const setAuthHeaders = (setLoading = () => null) => {
       .getAttribute("content"),
   };
   const token = getFromLocalStorage("authToken");
-  //const email = localStorage.getItem("authEmail");
   if (token) {
-    //axios.defaults.headers["X-Auth-Email"] = email;
     axios.defaults.headers["X-Auth-Token"] = token;
   }
   setLoading(false);
@@ -37,7 +35,7 @@ const handleSuccessResponse = response => {
 const handleErrorResponse = axiosErrorObject => {
   if (axiosErrorObject.response?.status === 401) {
     setToLocalStorage({ authToken: null });
-    setTimeout(() => (window.location.href = "/"), 2000);
+    setTimeout(() => (window.location.href = "/public"), 2000);
   }
 
   Toastr.error(

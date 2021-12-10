@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { Typography, Input, Button, PageLoader } from "@bigbinary/neetoui/v2";
 
 import generalsApi from "apis/generals";
+import { setToLocalStorage } from "helpers/storage";
 
 import Password from "./Password";
 
@@ -13,10 +14,12 @@ const General = ({ history }) => {
   const [loading, setLoading] = useState(false);
   const handleSave = async event => {
     event.preventDefault();
+    setToLocalStorage({ authToken: null });
     try {
       await generalsApi.update({
         payload: { general: { name: site_name, password: password || null } },
       });
+
       history.push("/settings");
     } catch (error) {
       logger.error(error);

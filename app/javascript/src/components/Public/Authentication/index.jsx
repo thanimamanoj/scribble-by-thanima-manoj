@@ -1,15 +1,38 @@
-import React from "react";
+import React, { useState } from "react";
 
-import Login from "./Login";
+import authApi from "apis/auth";
+import { setToLocalStorage } from "helpers/storage";
 
-import Header from "../Eui/Header";
+import Form from "./Form";
 
-const Authentication = () => {
+const Authentication = ({ siteName }) => {
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async event => {
+    event.preventDefault();
+    setLoading(true);
+    try {
+      const response = await authApi.login({ login: { password } });
+      setToLocalStorage({
+        authToken: response.data.authentication_token,
+      });
+      // setAuthHeaders();
+      setLoading(false);
+      window.location.href = "/public";
+    } catch (error) {
+      logger.error(error);
+      setLoading(false);
+    }
+  };
+
   return (
-    <>
-      <Header />
-      <Login />
-    </>
+    <Form
+      siteName={siteName}
+      setPassword={setPassword}
+      loading={loading}
+      handleSubmit={handleSubmit}
+    />
   );
 };
 

@@ -4,7 +4,7 @@ import { Input, Button, Typography } from "@bigbinary/neetoui/v2";
 
 import img1 from "./img1.png";
 
-const Form = ({ handleSubmit, setPassword, loading }) => {
+const Form = ({ siteName, handleSubmit, setPassword, loading }) => {
   return (
     <div
       className="flex mt-6 justify-center min-h-screen
@@ -13,10 +13,10 @@ const Form = ({ handleSubmit, setPassword, loading }) => {
       <div className="w-full max-w-md">
         <img src={img1} alt="image" className="mx-auto" />
         <Typography className="text-center " style="h2">
-          Spinkart is password protected!
+          {siteName} is password protected!
         </Typography>
         <Typography className="text-center text-gray-600">
-          Enter the password to gain access to Spinkart
+          Enter the password to gain access to {siteName}
         </Typography>
 
         <form className="mt-6 ml-12 pl-1" onSubmit={handleSubmit}>

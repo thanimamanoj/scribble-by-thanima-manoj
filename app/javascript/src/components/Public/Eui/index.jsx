@@ -6,7 +6,6 @@ import { Switch, Route } from "react-router-dom";
 import categoriesApi from "apis/categories";
 
 import Article from "./Article";
-import Header from "./Header";
 import Sidebar from "./Sidebar";
 
 const Preview = () => {
@@ -33,18 +32,15 @@ const Preview = () => {
   }
 
   return (
-    <div>
-      <Header />
-      <div className="w-full flex">
-        <Sidebar data={data} />
-        <Switch>
-          <Route
-            exact
-            path={`/public/:slug`}
-            component={() => <Article data={data} />}
-          />
-        </Switch>
-      </div>
+    <div className="w-full flex">
+      <Sidebar data={data} />
+      <Switch>
+        <Route
+          exact
+          path={`/public/:slug`}
+          component={() => <Article data={data} />}
+        />
+      </Switch>
     </div>
   );
 };
