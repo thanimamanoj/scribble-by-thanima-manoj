@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_08_074910) do
+ActiveRecord::Schema.define(version: 2021_12_09_082900) do
 
   create_table "articles", force: :cascade do |t|
     t.string "title", null: false
@@ -38,6 +38,7 @@ ActiveRecord::Schema.define(version: 2021_12_08_074910) do
     t.string "password_digest"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "authentication_token"
   end
 
   create_table "redirections", force: :cascade do |t|

@@ -23,6 +23,7 @@ const Article = ({ data }) => {
     }, []);
     fetchArticle(articleList);
   };
+
   useEffect(() => {
     fetchArticleList();
   }, []);

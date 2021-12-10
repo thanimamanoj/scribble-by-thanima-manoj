@@ -8,6 +8,7 @@ Rails.application.routes.draw do
     resources :articles, except: %i[new edit], param: :id
     resource :general, only: %i[show update]
     resources :redirections, except: %i[new edit], param: :id
+    resource :session, only: :create
   end
   namespace :public do
     resources :categories, only: :index, param: :slug
