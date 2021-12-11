@@ -2,6 +2,7 @@ import React from "react";
 
 import { ExternalLink } from "@bigbinary/neeto-icons";
 import { Typography, Button } from "@bigbinary/neetoui/v2";
+import { NavLink } from "react-router-dom";
 
 const NavBar = () => {
   return (
@@ -12,21 +13,21 @@ const NavBar = () => {
             <Typography style="h4" className="mr-4">
               Scribble
             </Typography>
-            <Button
-              label="Articles"
-              onClick={function noRefCheck() {}}
-              style="link"
-              className="mr-4 hover:neeto-ui-text-gray-800"
-              size="large"
+            <NavLink
+              exact
               to="/"
-            />
-            <Button
-              label="Settings"
-              onClick={function noRefCheck() {}}
-              style="link"
-              size="large"
+              activeStyle={{ color: "#5e5ce6" }}
+              className="text-base mr-4 font-medium hover:cursor neeto-ui-text-gray-400"
+            >
+              Articles
+            </NavLink>
+            <NavLink
               to="/settings"
-            />
+              activeStyle={{ color: "#5e5ce6" }}
+              className="text-base mr-4 font-medium hover:cursor neeto-ui-text-gray-400"
+            >
+              Settings
+            </NavLink>
           </div>
           <div className="flex items-center justify-end">
             <Button
