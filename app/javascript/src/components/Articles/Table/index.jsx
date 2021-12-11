@@ -1,9 +1,9 @@
-import React, { useMemo } from "react";
+import React, { useState, useMemo } from "react";
 
 import { Edit, Delete } from "@bigbinary/neeto-icons";
 import { Typography, Button } from "@bigbinary/neetoui/v2";
 import { useHistory } from "react-router-dom";
-import { useTable, useGlobalFilter, useFilters } from "react-table";
+import { useTable } from "react-table";
 
 import { COLUMNS } from "./columns";
 import Header from "./Header";
@@ -11,16 +11,19 @@ import "./table.css";
 
 const Table = ({ tableData, categories, deleteArticle }) => {
   const columns = useMemo(() => COLUMNS, []);
-  const data = useMemo(() => tableData, [tableData]);
-  const history = useHistory();
-  const tableInstance = useTable(
-    {
-      columns,
-      data,
-    },
-    useFilters,
-    useGlobalFilter
+  const [searchTitle, setSearchTitle] = useState("");
+  const data = useMemo(
+    () =>
+      tableData.filter(({ title }) =>
+        title.toLowerCase().includes(searchTitle)
+      ),
+    [searchTitle, tableData]
   );
+  const history = useHistory();
+  const tableInstance = useTable({
+    columns,
+    data,
+  });
   const {
     getTableProps,
     getTableBodyProps,
@@ -28,19 +31,14 @@ const Table = ({ tableData, categories, deleteArticle }) => {
     rows,
     prepareRow,
     allColumns,
-    state,
-    setGlobalFilter,
   } = tableInstance;
-  const { globalFilter } = state;
 
   return (
     <div className="ml-10">
       <Header
         allColumns={allColumns}
         categories={categories}
-        globalFilter={globalFilter}
-        setGlobalFilter={setGlobalFilter}
-        history={history}
+        setSearchTitle={setSearchTitle}
       />
       <div className="flex flex-col mt-10 ">
         <div className="my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">

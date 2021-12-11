@@ -2,19 +2,15 @@ import React from "react";
 
 import { Plus } from "@bigbinary/neeto-icons";
 import { Button, Dropdown, Checkbox } from "@bigbinary/neetoui/v2";
+import { useHistory } from "react-router-dom";
 
-import { GlobalFilter } from "./GlobalFilter";
+import { Searchbar } from "./Searchbar";
 
-const Header = ({
-  allColumns,
-  categories,
-  globalFilter,
-  setGlobalFilter,
-  history,
-}) => {
+const Header = ({ allColumns, categories, setSearchTitle }) => {
+  const history = useHistory();
   return (
     <div className="flex items-center my-4">
-      <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
+      <Searchbar setSearchTitle={setSearchTitle} />
       <Dropdown
         buttonStyle="secondary"
         label="Columns"
