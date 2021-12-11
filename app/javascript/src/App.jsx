@@ -1,9 +1,15 @@
 import React, { useEffect, useState } from "react";
 
-import { Route, Switch, BrowserRouter as Router } from "react-router-dom";
+import {
+  Route,
+  Switch,
+  BrowserRouter as Router,
+  Redirect,
+} from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 
 import { registerIntercepts, setAuthHeaders } from "apis/axios";
+import redirectionsApi from "apis/redirections";
 import { initializeLogger } from "common/logger";
 import CreateArticle from "components/Articles/CreateArticle";
 import EditArticle from "components/Articles/EditArticle";
@@ -15,11 +21,25 @@ import { getFromLocalStorage } from "helpers/storage";
 const App = () => {
   const [loading, setLoading] = useState(true);
   const authToken = getFromLocalStorage("authToken");
+  const [redirectionList, setRedirectionList] = useState([]);
+
+  const fetchRedirections = async () => {
+    try {
+      setLoading(true);
+      const response = await redirectionsApi.list();
+      setRedirectionList(response.data.redirections);
+      setLoading(false);
+    } catch (error) {
+      logger.error(error);
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     initializeLogger();
     registerIntercepts();
     setAuthHeaders(setLoading);
+    fetchRedirections();
   }, []);
 
   if (loading) {
@@ -30,8 +50,14 @@ const App = () => {
     <Router>
       <ToastContainer />
       <Switch>
-        {/* <Route exact path="/" render={() => <div>Home</div>} />
-        <Route exact path="/about" render={() => <div>About</div>} /> */}
+        {redirectionList.map((redirection, index) => (
+          <Redirect
+            key={index}
+            exact
+            from={redirection.from_path}
+            to={redirection.to_path}
+          />
+        ))}
         <Route exact path="/" component={Dashboard} />
         <Route exact path="/articles/create" component={CreateArticle} />
         <Route exact path="/articles/:id/edit" component={EditArticle} />

@@ -41,10 +41,18 @@ const Rows = ({
                       <div className="neeto-ui-text-gray-500">
                         {`https://scribble.com`}
                       </div>
-                      {item.from_path.slice(20)}
+                      {item.from_path}
                     </div>
                   </td>
-                  <td>{item.to_path}</td>
+                  <td>
+                    {" "}
+                    <div className="flex">
+                      <div className="neeto-ui-text-gray-500">
+                        {`https://scribble.com`}
+                      </div>
+                      {item.to_path}
+                    </div>
+                  </td>
                   <td>
                     {
                       <div className="flex">
