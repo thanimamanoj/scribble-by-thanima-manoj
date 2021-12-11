@@ -9,8 +9,8 @@ import Form from "../Form";
 
 const Add = ({ fetchRedirections }) => {
   const [addRedirection, setAddRedirection] = useState(false);
-  const [from_path, setFromPath] = useState("https://scribble.com");
-  const [to_path, setToPath] = useState("https://scribble.com");
+  const [from_path, setFromPath] = useState("/");
+  const [to_path, setToPath] = useState("/");
   const handleSubmit = async event => {
     setAddRedirection(false);
     event.preventDefault();
