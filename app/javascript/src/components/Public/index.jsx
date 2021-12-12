@@ -4,16 +4,17 @@ import { PageLoader } from "@bigbinary/neetoui/v2";
 import { Route, Switch, Redirect } from "react-router-dom";
 
 import generalsApi from "apis/generals";
+import { getFromLocalStorage } from "helpers/storage";
 
 import Authentication from "./Authentication";
 import Eui from "./Eui";
 import Header from "./Header";
 
-const Public = ({ authToken }) => {
+const Public = () => {
   const [siteName, setSiteName] = useState("");
   const [isProtected, setIsProtected] = useState(false);
   const [loading, setLoading] = useState(true);
-
+  const authToken = getFromLocalStorage("authToken");
   const fetchSiteDetails = async () => {
     try {
       setLoading(true);

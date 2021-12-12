@@ -9,15 +9,13 @@ import { COLUMNS } from "./columns";
 import Header from "./Header";
 import "./table.css";
 
-const Table = ({ tableData, categories, deleteArticle }) => {
+const Table = ({ articles, categories, deleteArticle }) => {
   const columns = useMemo(() => COLUMNS, []);
   const [searchTitle, setSearchTitle] = useState("");
   const data = useMemo(
     () =>
-      tableData.filter(({ title }) =>
-        title.toLowerCase().includes(searchTitle)
-      ),
-    [searchTitle, tableData]
+      articles.filter(({ title }) => title.toLowerCase().includes(searchTitle)),
+    [searchTitle, articles]
   );
   const history = useHistory();
   const tableInstance = useTable({
@@ -40,7 +38,8 @@ const Table = ({ tableData, categories, deleteArticle }) => {
         categories={categories}
         setSearchTitle={setSearchTitle}
       />
-      <div className="flex flex-col mt-10 ">
+      <Typography style="h4">{`${data.length} Articles`}</Typography>
+      <div className="flex flex-col mt-5 ">
         <div className="my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
             <div className="overflow-hidden border-b border-gray-200 shadow md:custom-box-shadow">

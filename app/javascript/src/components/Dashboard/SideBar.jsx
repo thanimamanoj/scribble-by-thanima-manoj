@@ -89,11 +89,11 @@ const SideBar = ({
         )}
         {categories
           .filter(({ name }) => name.toLowerCase().includes(search))
-          .map(({ name, id }) => (
+          .map(({ name, id, count }) => (
             <MenuBar.Block
               key={id}
               label={name}
-              count={count.category_count[id]}
+              count={count}
               onClick={() => setSelectedCategory(name)}
               active={selectedCategory === name}
             />

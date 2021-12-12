@@ -58,6 +58,7 @@ const Dashboard = () => {
       try {
         await articlesApi.destroy(id);
         await fetchArticles();
+        await fetchCategories();
       } catch (error) {
         logger.error(error);
       }
@@ -96,7 +97,7 @@ const Dashboard = () => {
         />
         <div>
           <Main
-            tdata={articles}
+            articles={articles}
             active={active}
             selectedCategory={selectedCategory}
             categories={categories}

@@ -32,7 +32,7 @@ const Redirections = () => {
   }
 
   return (
-    <div className=" mx-auto mt-6">
+    <div className=" mx-24 mt-6">
       <List tableData={redirections} fetchRedirections={fetchRedirections} />
       <Add fetchRedirections={fetchRedirections} />
     </div>
