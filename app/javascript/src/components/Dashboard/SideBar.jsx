@@ -13,6 +13,7 @@ const SideBar = ({
   count,
   handleAddCategory,
 }) => {
+  const [search, setSearch] = useState("");
   const [isSearchCollapsed, setIsSearchCollapsed] = useState(true);
   const [isAddCollapsed, setIsAddCollapsed] = useState(true);
   const [name, setName] = useState();
@@ -65,8 +66,13 @@ const SideBar = ({
           </Typography>
         </MenuBar.SubTitle>
         <MenuBar.Search
+          onChange={e => setSearch(e.target.value.toLowerCase())}
+          onClose={() => setSearch("")}
           collapse={isSearchCollapsed}
-          onCollapse={() => setIsSearchCollapsed(true)}
+          onCollapse={() => {
+            setIsSearchCollapsed(true);
+            setSearch("");
+          }}
         />
         {!isAddCollapsed && (
           <div className="flex">
@@ -81,15 +87,17 @@ const SideBar = ({
             ></Button>
           </div>
         )}
-        {categories.map(({ name, id }) => (
-          <MenuBar.Block
-            key={id}
-            label={name}
-            count={count.category_count[id]}
-            onClick={() => setSelectedCategory(name)}
-            active={selectedCategory === name}
-          />
-        ))}
+        {categories
+          .filter(({ name }) => name.toLowerCase().includes(search))
+          .map(({ name, id, count }) => (
+            <MenuBar.Block
+              key={id}
+              label={name}
+              count={count}
+              onClick={() => setSelectedCategory(name)}
+              active={selectedCategory === name}
+            />
+          ))}
       </MenuBar>
     </div>
   );

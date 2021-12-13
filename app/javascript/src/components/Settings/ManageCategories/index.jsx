@@ -31,8 +31,8 @@ const ManageCategories = () => {
     setAddCategory(false);
     try {
       await categoriesApi.create({ category: { name } });
+      await fetchCategories();
       setLoading(false);
-      window.location.reload();
     } catch (error) {
       logger.error(error);
       setLoading(false);

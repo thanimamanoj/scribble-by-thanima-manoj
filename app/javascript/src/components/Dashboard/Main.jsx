@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 
-import Table from "../Articles/Table";
+import Table from "./Articles/Table";
 
 const Main = ({
-  tdata,
+  articles,
   active,
   selectedCategory,
   categories,
@@ -15,22 +15,22 @@ const Main = ({
     selectedCategory
       ? active === "All"
         ? setTableData(
-            tdata.filter(({ category }) => category === selectedCategory)
+            articles.filter(({ category }) => category === selectedCategory)
           )
         : setTableData(
-            tdata
+            articles
               .filter(({ status }) => status === active)
               .filter(({ category }) => category === selectedCategory)
           )
       : active === "All"
-      ? setTableData(tdata)
-      : setTableData(tdata.filter(({ status }) => status === active));
-  }, [selectedCategory, active, tdata]);
+      ? setTableData(articles)
+      : setTableData(articles.filter(({ status }) => status === active));
+  }, [selectedCategory, active, articles]);
 
   return (
     <div>
       <Table
-        tableData={tableData}
+        articles={tableData}
         categories={categories}
         deleteArticle={deleteArticle}
       />

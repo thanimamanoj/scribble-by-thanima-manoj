@@ -11,16 +11,14 @@ import { ToastContainer } from "react-toastify";
 import { registerIntercepts, setAuthHeaders } from "apis/axios";
 import redirectionsApi from "apis/redirections";
 import { initializeLogger } from "common/logger";
-import CreateArticle from "components/Articles/CreateArticle";
-import EditArticle from "components/Articles/EditArticle";
+import CreateArticle from "components/Dashboard/Articles/CreateArticle";
+import EditArticle from "components/Dashboard/Articles/EditArticle";
 import Dashboard from "components/Dashboard/index";
 import Public from "components/Public";
 import Settings from "components/Settings";
-import { getFromLocalStorage } from "helpers/storage";
 
 const App = () => {
   const [loading, setLoading] = useState(true);
-  const authToken = getFromLocalStorage("authToken");
   const [redirectionList, setRedirectionList] = useState([]);
 
   const fetchRedirections = async () => {
@@ -62,10 +60,7 @@ const App = () => {
         <Route exact path="/articles/create" component={CreateArticle} />
         <Route exact path="/articles/:id/edit" component={EditArticle} />
         <Route path="/settings" component={Settings} />
-        <Route
-          path="/public"
-          component={() => <Public authToken={authToken} />}
-        />
+        <Route path="/public" component={Public} />
       </Switch>
     </Router>
   );

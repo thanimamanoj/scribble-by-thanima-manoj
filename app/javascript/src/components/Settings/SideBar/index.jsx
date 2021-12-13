@@ -1,20 +1,21 @@
 import React from "react";
 
 import { Typography } from "@bigbinary/neetoui/v2";
+import { NavLink } from "react-router-dom";
 
 import Data from "./Data";
 
 const SideBar = () => {
   return (
     <div className="h-screen w-1/3 border ">
-      <ul className=" pt-6">
+      <div className=" pt-6">
         {Data.map((value, index) => (
-          <li
-            className=" h-20 flex items-center mx-6 cursor-pointer hover:neeto-ui-bg-pastel-blue "
+          <NavLink
+            exact
+            to={value.link}
+            activeStyle={{ backgroundColor: "#eaf3fc" }}
+            className=" h-20 flex items-center mx-6 cursor-pointer  "
             key={index}
-            onClick={() => {
-              window.location.pathname = value.link;
-            }}
           >
             <div className="mx-4 flex items-center">
               <div className="grid items-center mr-2">{value.icon}</div>
@@ -25,9 +26,9 @@ const SideBar = () => {
                 </Typography>
               </div>
             </div>
-          </li>
+          </NavLink>
         ))}
-      </ul>
+      </div>
     </div>
   );
 };
