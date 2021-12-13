@@ -9,6 +9,5 @@ json.articles @articles do |article|
     :status
   json.date article.Published? ? article.created_at.strftime("%B #{article.created_at.day.ordinalize}, %Y") : "-"
   json.category article.category ? article.category.name : "-"
-  #json.author "Oliver Smith"
   json.author article.user.name
 end
