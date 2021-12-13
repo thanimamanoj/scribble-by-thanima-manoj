@@ -16,4 +16,13 @@ class RedirectionTest < ActiveSupport::TestCase
     @redirection.to_path = ""
     assert @redirection.invalid?
   end
+
+  def test_redirection_should_not_be_valid_and_saved_if_from_path_not_unique
+    @redirection.save!
+
+    test_redirection = @redirection.dup
+    assert_not test_redirection.valid?
+
+    assert_includes test_redirection.errors.full_messages, "From path has already been taken"
+  end
 end
