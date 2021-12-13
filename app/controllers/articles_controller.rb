@@ -8,7 +8,7 @@ class ArticlesController < ApplicationController
   end
 
   def create
-    article = Article.new(article_params)
+    article = Article.new(article_params.merge!(user: User.first))
     if article.save
       render status: :ok, json: { notice: t("successfully_created", entity: "Article") }
     else
