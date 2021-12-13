@@ -5,5 +5,5 @@ json.categories @categories do |category|
     :id,
     :name,
     :sequence
-    json.count category.articles.size
+  json.count category.articles.size
 end
